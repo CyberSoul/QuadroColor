@@ -12,6 +12,8 @@ public class Figure : MonoBehaviour
     #endregion
 
     #region //Private fields
+
+    [SerializeField] Material[] materials;
     #endregion
 
     #region //Properies
@@ -32,6 +34,27 @@ public class Figure : MonoBehaviour
     #endregion
 
     #region //Public
+
+    public void AddMaterial(Material a_material)
+    {
+        for (int i =0; i < materials.Length; ++i)
+        {
+            if (materials[i] == null)
+            {
+                AddMaterial(a_material, i);
+                break;
+            }
+        }
+    }
+
+    public void AddMaterial(Material a_material, int index)
+    {
+        if ( index >= 0  && index < renderers.Length)
+        {
+            renderers[index].material = a_material;
+            materials[index] = a_material;
+        }
+    }
     #endregion
 
     #region //Private
@@ -41,6 +64,7 @@ public class Figure : MonoBehaviour
     private void OnValidate()
     {
         renderers = new MeshRenderer[size];
+        materials = new Material[size];
 
         var foundRenderers = GetComponentsInChildren<MeshRenderer>();
         for (int i = 0; i < foundRenderers.Length && i < size; ++i)

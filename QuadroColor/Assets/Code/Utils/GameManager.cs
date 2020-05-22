@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonTemplate<GameManager>
 {
     #region // SerializeFields
     [SerializeField] GameSettings gameSettings;
 
     [SerializeField] Desk desk;
+    [SerializeField] FiguresContainer figureContainer;
     #endregion
 
     #region //Private fields
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         if (desk != null)
         {
             desk.CreateMap(deskSize);
+            figureContainer.CreateFigures(deskSize, GetFigure(), GetMaterials());
         }
     }
 

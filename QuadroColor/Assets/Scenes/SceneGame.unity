@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 1233343618}
-  attachedFigure: {fileID: 0}
 --- !u!1 &141490324
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +365,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 169751103}
-  attachedFigure: {fileID: 0}
 --- !u!1 &305379211
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +441,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 1728657317}
-  attachedFigure: {fileID: 0}
 --- !u!1 &344652700
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +610,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 1131132245}
-  attachedFigure: {fileID: 0}
 --- !u!1 &802930468
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +976,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 1823979681}
-  attachedFigure: {fileID: 0}
 --- !u!1 &1131132244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +1052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 305379212}
-  attachedFigure: {fileID: 0}
 --- !u!1 &1233343617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 2117584502}
-  attachedFigure: {fileID: 0}
 --- !u!1 &1480954952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,6 +1137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1480954953}
+  - component: {fileID: 1480954954}
   m_Layer: 0
   m_Name: figuresContainer
   m_TagString: Untagged
@@ -1159,12 +1153,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480954952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1480954954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480954952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fefdc40468863b4bae55d136bde492f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  figureStep: 1
+  figures: []
 --- !u!1 &1502977783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,7 +1250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1502977783}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 15, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1387,7 +1395,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 91694212}
-  attachedFigure: {fileID: 0}
 --- !u!1 &1622861468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,7 +1657,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachPosition: {fileID: 344652701}
-  attachedFigure: {fileID: 0}
 --- !u!1 &1760820483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,6 +1918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSettings: {fileID: 11400000, guid: 86aae0fe627fe1e469ae6c7ed4dca0f1, type: 2}
   desk: {fileID: 879697294}
+  figureContainer: {fileID: 1480954954}
   deskSize: 4
 --- !u!1 &2012121396
 GameObject:
