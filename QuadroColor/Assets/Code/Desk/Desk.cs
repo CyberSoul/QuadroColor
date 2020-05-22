@@ -37,10 +37,10 @@ public class Desk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (deskEllements == null)
+        /*if (deskEllements == null)
         {
             CreateMap();
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -52,6 +52,16 @@ public class Desk : MonoBehaviour
     #endregion
 
     #region //Public
+    public void CreateMap(int a_deskSize)
+    {
+        UnityEditor.EditorApplication.delayCall += () =>
+        {
+            size = a_deskSize;
+            //Delay for correct destroy.
+            RemoveEllements();
+            CreateMap();
+        };
+    }
     #endregion
 
     #region //Private

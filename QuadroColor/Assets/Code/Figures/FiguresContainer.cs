@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeskEllement : MonoBehaviour
+public class FiguresContainer : MonoBehaviour
 {
     #region //SerializeFields
-    [SerializeField] Transform attachPosition;
+
     #endregion
 
     #region //Private fields
-    private Figure attachedFigure = null;
+
+    public List<Figure> figures;
     #endregion
 
     #region //Properies
-    public bool IsOccupied { get { return attachedFigure != null; } }
-    public Figure Occupier { get { return attachedFigure; } }
     #endregion
 
     #region //Overrides
@@ -32,13 +31,15 @@ public class DeskEllement : MonoBehaviour
     #endregion
 
     #region //Public
-
-    public void AttachFigure( Figure a_figure)
+    void CreateFigures(int a_deckSize)
     {
-        a_figure.transform.SetParent(attachPosition);
-        a_figure.transform.localPosition = new Vector3(0, 0, 0);
-    }
+        int figureAmount = a_deckSize * a_deckSize;
+        if (a_deckSize % 2 == 1)
+        {
+            figureAmount -= 1; //Special case for odd deck size
+        }
 
+    }
     #endregion
 
     #region //Private
@@ -47,10 +48,8 @@ public class DeskEllement : MonoBehaviour
     #region //Editor part
     private void OnValidate()
     {
-        /*if (attachedFigure!= null)
-        {
-            AttachFigure(attachedFigure);
-        }*/
+
+
     }
     #endregion
 }
