@@ -6,10 +6,13 @@ public class DeskEllement : MonoBehaviour
 {
     #region //SerializeFields
     [SerializeField] Transform attachPosition;
+    [SerializeField] Material highlightMaterial;
+    [SerializeField] MeshRenderer meshView;
     #endregion
 
     #region //Private fields
     private Figure attachedFigure = null;
+    private Material defaultMaterial;
     #endregion
 
     #region //Properies
@@ -21,13 +24,23 @@ public class DeskEllement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        defaultMaterial = meshView.material;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private void OnMouseEnter()
+    {
+        meshView.material = highlightMaterial;
+    }
+
+    private void OnMouseExit()
+    {
+        meshView.material = defaultMaterial;
     }
     #endregion
 
