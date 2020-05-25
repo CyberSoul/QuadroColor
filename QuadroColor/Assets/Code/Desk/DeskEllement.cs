@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System; //For func and actions.
 
 public class DeskEllement : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class DeskEllement : MonoBehaviour
     [SerializeField] Transform attachPosition;
     [SerializeField] Material highlightMaterial;
     [SerializeField] MeshRenderer meshView;
+    #endregion
+
+    #region //Events
+
+    public Action<DeskEllement> OnTap;
+
     #endregion
 
     #region //Private fields
@@ -42,6 +49,14 @@ public class DeskEllement : MonoBehaviour
     {
         meshView.material = defaultMaterial;
     }
+
+    private void OnMouseUpAsButton()
+    {
+        if (GameEvents.Instance.OnDeskEllementTap != null)
+        {
+            GameEvents.Instance.OnDeskEllementTap(this);
+        }
+    }
     #endregion
 
     #region //Public
@@ -52,6 +67,10 @@ public class DeskEllement : MonoBehaviour
         a_figure.transform.localPosition = new Vector3(0, 0, 0);
     }
 
+    #endregion
+
+    #region //Event callbacks
+    
     #endregion
 
     #region //Private

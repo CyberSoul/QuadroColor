@@ -409,13 +409,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141490324}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &217147883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,7 +2256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   figureStep: 1
   widthFigureAmount: 4
+  selecetedView: {fileID: 0}
   figures: []
+  selectedFigure: {fileID: 0}
 --- !u!1 &1502977783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2464,6 +2466,49 @@ MonoBehaviour:
   attachPosition: {fileID: 598073852}
   highlightMaterial: {fileID: 2100000, guid: 3140c599d2b54d849a068201c573dfcc, type: 2}
   meshView: {fileID: 1922651017}
+--- !u!1 &1577343710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1577343711}
+  - component: {fileID: 1577343712}
+  m_Layer: 0
+  m_Name: GameEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1577343711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577343710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1577343712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577343710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bbeea582009c4d4c9fe1a16a4c95a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1584993416
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,7 +3145,7 @@ MonoBehaviour:
   gameSettings: {fileID: 11400000, guid: 86aae0fe627fe1e469ae6c7ed4dca0f1, type: 2}
   desk: {fileID: 879697294}
   figureContainer: {fileID: 1480954954}
-  deskSize: 5
+  deskSize: 4
 --- !u!1 &1997194011
 GameObject:
   m_ObjectHideFlags: 0

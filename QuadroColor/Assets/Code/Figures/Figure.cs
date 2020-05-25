@@ -1,22 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System; //For func and actions.
 
 public class Figure : MonoBehaviour
 {
     #region //SerializeFields
-    [SerializeField] [Range(3, 7)] int size = 3; 
+    [SerializeField] [Range(3, 7)] int size = 3;
 
     [Header("Visual")]
     [SerializeField] MeshRenderer[] renderers;
+    [SerializeField] GameObject selectedView;
+    #endregion
+
+    #region //Events
+    //public Action<Figure> OnTap;
     #endregion
 
     #region //Private fields
-
     [SerializeField] Material[] materials;
+
+    public bool isAttached = false;
     #endregion
 
     #region //Properies
+    public bool IsAttached { get { return isAttached; } }
     #endregion
 
     #region //Overrides
@@ -31,10 +39,17 @@ public class Figure : MonoBehaviour
     {
 
     }
+
+    private void OnMouseUpAsButton()
+    {
+        if ( GameEvents.Instance.OnFigureTap != null)
+        {
+            GameEvents.Instance.OnFigureTap(this);
+        }
+    }
     #endregion
 
     #region //Public
-
     public void AddMaterial(Material a_material)
     {
         for (int i =0; i < materials.Length; ++i)
@@ -54,6 +69,23 @@ public class Figure : MonoBehaviour
             renderers[index].material = a_material;
             materials[index] = a_material;
         }
+    }
+
+    public void Select()
+    {
+        Debug.Log("Figure Select");
+        selectedView.active = true;
+    }
+
+    public void UnSelect()
+    {
+        Debug.Log("Figure UnSelect");
+        selectedView.active = false;
+    }
+
+    public void Attach()
+    {
+
     }
     #endregion
 
