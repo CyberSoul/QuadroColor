@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Desk : MonoBehaviour
 {
@@ -15,15 +16,15 @@ public class Desk : MonoBehaviour
     [SerializeField] Transform deskView;
     [SerializeField] GameObject deskEllementContainer;
     //[SerializeField] Transform borderView;//TO_DO
-    [SerializeField] GameObject deskEllementPrefab;
+    [SerializeField] DeskEllement deskEllementPrefab;
 
 #if UNITY_EDITOR
 
 #endif
-#endregion
+    #endregion
 
     #region //Private fields
-    GameObject[,] deskEllements;
+    DeskEllement[,] deskEllements;
     #endregion
 
     #region //Properies
@@ -37,10 +38,13 @@ public class Desk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameEvents.Instance.OnAttachFigure += OnFigureAttached;
+
         /*if (deskEllements == null)
         {
             CreateMap();
         }*/
+
     }
 
     // Update is called once per frame
@@ -62,10 +66,36 @@ public class Desk : MonoBehaviour
             CreateMap();
         };
     }
+
+    public Vector2Int GetDeskEllemenIndexes(DeskEllement a_ellement)
+    {
+        for (int i = 0; i < deskEllements.GetLength(0); ++i)
+            for (int j = 0; j < deskEllements.GetLength(1); ++j)
+            {
+                if (deskEllements[i, j] == a_ellement)
+                {
+                    return new Vector2Int(i, j);
+                }
+            }
+
+        Debug.LogError("Can not find ellement");
+        return new Vector2Int(0, 0);
+    }
+    #endregion
+
+    #region //Event callbacks
+
+    void OnFigureAttached( DeskEllement a_ellement, Figure a_figure )
+    {
+        //Check for complete lines.
+        CheckWinCondition(a_ellement);
+    }
+
     #endregion
 
     #region //Private
 
+    #region //Generation
     void CreateMap()
     {
         if (deskView != null && deskEllementPrefab != null)
@@ -77,12 +107,12 @@ public class Desk : MonoBehaviour
 
             deskView.localScale = new Vector3(Width * ellementStep, deskView.localScale.y, Height * ellementStep);
 
-            deskEllements = new GameObject[Width, Height];
+            deskEllements = new DeskEllement[Width, Height];
             for (int i = 0; i < deskEllements.GetLength(0); ++i)
             {
                 for (int j = 0; j < deskEllements.GetLength(1); ++j)
                 {
-                    var ellement = Instantiate(deskEllementPrefab, deskEllementContainer.transform, false);
+                    DeskEllement ellement = Instantiate(deskEllementPrefab, deskEllementContainer.transform, false) as DeskEllement;
 
                     ellement.transform.localPosition = new Vector3((i - Width / 2f )* ellementStep , 0, (j - Height / 2f )* ellementStep );
                     deskEllements[i, j] = ellement;
@@ -139,6 +169,74 @@ public class Desk : MonoBehaviour
             deskEllements = null;
         }*/
     }
+    #endregion
+
+    #region //Check win condition
+
+    void CheckWinCondition(DeskEllement a_updatedEllement)
+    {
+        //Should find position of updated figure.
+        Vector2Int indexes = GetDeskEllemenIndexes(a_updatedEllement);
+
+        bool isWin = CheckWinCondition(new Vector2Int(indexes.x, 0), new Vector2Int(0, 1));
+        if (!isWin)
+        {
+            isWin = CheckWinCondition(new Vector2Int(0, indexes.y), new Vector2Int(1, 0));
+            if (!isWin)
+            {
+                if (indexes.x == indexes.y)
+                {
+                    //Diagonal check
+                    isWin = CheckWinCondition(new Vector2Int(0, 0), new Vector2Int(1, 1));
+                }
+
+                if (!isWin)
+                {
+                    if ((indexes.x + indexes.y) == (deskEllements.GetLength(0) - 1))
+                    {
+                        //Diagonal check
+                        isWin = CheckWinCondition(new Vector2Int(0, 3), new Vector2Int(1, -1));
+                    }
+                }
+            }
+        }
+
+        if (isWin)
+        {
+            GameEvents.Instance.OnCollectLine();
+        }
+    }
+
+    bool CheckWinCondition(Vector2Int a_startIndex, Vector2Int a_indexStep)
+    {
+        List<Material> figuresMaterials = null;
+        
+        for (int i = 0; i < deskEllements.GetLength(0); ++i)
+        {
+            if (deskEllements[a_startIndex.x, a_startIndex.y].IsOccupied)
+            {
+                var materials = deskEllements[a_startIndex.x, a_startIndex.y].Occupier.Materials;
+                if (figuresMaterials == null)
+                {
+                    figuresMaterials = new List<Material>();
+                    figuresMaterials.AddRange(materials);
+                }
+                else
+                {
+                    figuresMaterials = figuresMaterials.Where(obj => materials.Contains(obj)).ToList();
+                }
+            }
+            else
+            {
+                return false;
+            }
+            a_startIndex += a_indexStep;
+        }
+
+        return figuresMaterials.Count > 0;
+    }
+    #endregion
+    
     #endregion
 
     #region //Editor part

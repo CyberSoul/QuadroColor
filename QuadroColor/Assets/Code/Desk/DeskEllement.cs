@@ -32,6 +32,8 @@ public class DeskEllement : MonoBehaviour
     void Start()
     {
         defaultMaterial = meshView.material;
+
+        GameEvents.Instance.OnResetGame += OnResetGame;
     }
 
     // Update is called once per frame
@@ -42,17 +44,23 @@ public class DeskEllement : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        meshView.material = highlightMaterial;
+        if (!IsOccupied)
+        {
+            meshView.material = highlightMaterial;
+        }
     }
 
     private void OnMouseExit()
     {
-        meshView.material = defaultMaterial;
+        if (!IsOccupied)
+        {
+            meshView.material = defaultMaterial;
+        }
     }
 
     private void OnMouseUpAsButton()
     {
-        if (GameEvents.Instance.OnDeskEllementTap != null)
+        if (GameEvents.Instance.OnDeskEllementTap != null && !IsOccupied)
         {
             GameEvents.Instance.OnDeskEllementTap(this);
         }
@@ -65,12 +73,20 @@ public class DeskEllement : MonoBehaviour
     {
         a_figure.transform.SetParent(attachPosition);
         a_figure.transform.localPosition = new Vector3(0, 0, 0);
+        attachedFigure = a_figure;
+        meshView.material = defaultMaterial;
     }
 
     #endregion
 
     #region //Event callbacks
-    
+
+    public void OnResetGame(int deskSize)
+    {
+        attachedFigure = null;
+       // meshView.material = defaultMaterial;
+    }
+
     #endregion
 
     #region //Private

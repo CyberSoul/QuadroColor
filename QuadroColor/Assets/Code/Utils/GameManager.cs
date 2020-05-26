@@ -32,6 +32,9 @@ public class GameManager : SingletonTemplate<GameManager>
             desk.CreateMap(deskSize);
             figureContainer.CreateFigures(deskSize, GetFigure(), GetMaterials());
         }
+        GameEvents.Instance.OnDeskEllementTap += OnDeskTap;
+        GameEvents.Instance.OnCollectLine += OnLineCollected;
+        GameEvents.Instance.OnResetGame += OnResetGame;
     }
 
     // Update is called once per frame
@@ -51,6 +54,31 @@ public class GameManager : SingletonTemplate<GameManager>
     public Figure GetFigure()
     {
         return gameSettings.GetFigure(deskSize);
+    }
+    #endregion
+
+    #region //Event callbacks
+    private void OnResetGame(int deskSize)
+    {
+
+    }
+
+    private void OnDeskTap(DeskEllement ellement)
+    {
+        if (figureContainer.SelectedFigure != null)
+        {
+            var figure = figureContainer.SelectedFigure;
+            ellement.AttachFigure(figure);
+            figure.Attach();
+
+            GameEvents.Instance.OnAttachFigure(ellement, figure);
+        }
+    }
+
+    private void OnLineCollected()
+    {
+        GameEvents.Instance.OnGameComplete();
+        Debug.Log("CONGRATULATIONS!");
     }
     #endregion
 

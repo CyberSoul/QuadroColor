@@ -12,6 +12,12 @@ public class GameEvents : SingletonTemplate<GameEvents>
     #region //Events
     public Action<Figure> OnFigureTap;
     public Action<DeskEllement> OnDeskEllementTap;
+    public Action<DeskEllement, Figure> OnAttachFigure;
+    public Action OnCollectLine;
+
+    public Action OnGameComplete;
+    public Action<int> OnResetGame;
+    public Action OnTurnEnd;
     #endregion
 
     #region //Private fields
@@ -28,6 +34,8 @@ public class GameEvents : SingletonTemplate<GameEvents>
     #region //Public
     #endregion
 
+    #region //Event callbacks
+    #endregion
 
     #region //Private
     #endregion

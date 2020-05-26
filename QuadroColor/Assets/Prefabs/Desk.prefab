@@ -169,10 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAutoGenerateOnValidate: 0
-  width: 3
-  height: 3
+  size: 3
   ellementStep: 1
   deskView: {fileID: 4621216584206012388}
   deskEllementContainer: {fileID: 138385651}
-  deskEllementPrefab: {fileID: 8614095323781288817, guid: d4425fa2f2570f54284e35f823f1d6d1,
+  deskEllementPrefab: {fileID: 1156688980299734192, guid: d4425fa2f2570f54284e35f823f1d6d1,
     type: 3}

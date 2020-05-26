@@ -25,13 +25,15 @@ public class Figure : MonoBehaviour
 
     #region //Properies
     public bool IsAttached { get { return isAttached; } }
+
+    public Material[] Materials { get { return materials; } }
     #endregion
 
     #region //Overrides
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameEvents.Instance.OnResetGame += OnResetGame;
     }
 
     // Update is called once per frame
@@ -42,7 +44,7 @@ public class Figure : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        if ( GameEvents.Instance.OnFigureTap != null)
+        if ( GameEvents.Instance.OnFigureTap != null && !isAttached)
         {
             GameEvents.Instance.OnFigureTap(this);
         }
@@ -85,11 +87,21 @@ public class Figure : MonoBehaviour
 
     public void Attach()
     {
-
+        UnSelect();
+        isAttached = true;
     }
     #endregion
 
     #region //Private
+    #endregion
+
+    #region //Event callbacks
+
+    public void OnResetGame(int deskSize)
+    {
+        isAttached = false;
+    }
+
     #endregion
 
     #region //Editor part
@@ -108,5 +120,4 @@ public class Figure : MonoBehaviour
             Debug.LogError($"Incorrect size of renderers and required amount. Amount = {size}, but renderers found: {foundRenderers.Length}");
     }
     #endregion
-
 }

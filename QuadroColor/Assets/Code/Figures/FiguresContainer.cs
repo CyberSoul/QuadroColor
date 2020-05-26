@@ -44,6 +44,9 @@ public class FiguresContainer : MonoBehaviour
     void Start()
     {
         GameEvents.Instance.OnFigureTap += OnFigureTap;
+        GameEvents.Instance.OnAttachFigure += OnFigureAttached;
+        GameEvents.Instance.OnResetGame += OnResetGame;
+        //GameEvents.Instance.OnDeskEllementTap += OnDeskTap;
     }
 
     // Update is called once per frame
@@ -80,8 +83,34 @@ public class FiguresContainer : MonoBehaviour
     }
     #endregion
 
-    #region //Even callbacks
-    private void OnFigureTap( Figure a_figure )
+    #region //Event callbacks
+    void OnResetGame(int deskSize)
+    {
+        if (selectedFigure != null)
+        {
+            selectedFigure.UnSelect();
+        }
+        selectedFigure = null;
+
+        int index = 0;
+        foreach (var figure in figures)
+        {
+            int i = index / deskSize;
+            int j = index % deskSize;
+            figure.transform.parent = transform;
+            figure.transform.localPosition = new Vector3(( i - deskSize / 2f) * figureStep, 0, ( j - deskSize / 2f) * figureStep);
+            ++index;
+        }
+        /*for (int i = 0; i < figures.; ++i)
+            for (int j = 0; j < heightFigureAmount; ++j)
+            {
+                var figure = Instantiate(a_figurePrefab, transform);
+                figure.transform.localPosition = new Vector3((i - widthFigureAmount / 2f) * figureStep, 0, (j - heightFigureAmount / 2f) * figureStep);
+                figures.Add(figure);
+            }*/
+    }
+
+    private void OnFigureTap(Figure a_figure)
     {
         Debug.Log("OnFigureTap");
         bool isSame = a_figure == selectedFigure;
@@ -102,6 +131,22 @@ public class FiguresContainer : MonoBehaviour
             selectedFigure = null;
         }
     }
+
+    private void OnFigureAttached(DeskEllement a_deskEllement, Figure a_figure)
+    {
+        selectedFigure = null;
+    }
+
+    /*private void OnDeskTap( DeskEllement ellement )
+    {
+        if( selectedFigure != null )
+        {
+            ellement.AttachFigure(selectedFigure);
+            selectedFigure.Attach();
+
+            selectedFigure = null;
+        }
+    }*/
     #endregion
 
     #region //Private
