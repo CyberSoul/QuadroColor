@@ -40,6 +40,11 @@ public class UIManager : SingletonTemplate<UIManager>
         }
     }
 
+    public void Close()
+    {
+        Application.Quit();
+    }
+
     #endregion
 
     #region //Event callbacks

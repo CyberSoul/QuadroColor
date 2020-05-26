@@ -58,13 +58,10 @@ public class Desk : MonoBehaviour
     #region //Public
     public void CreateMap(int a_deskSize)
     {
-        UnityEditor.EditorApplication.delayCall += () =>
-        {
-            size = a_deskSize;
-            //Delay for correct destroy.
-            RemoveEllements();
-            CreateMap();
-        };
+        size = a_deskSize;
+        //Delay for correct destroy.
+        RemoveEllements();
+        CreateMap();
     }
 
     public Vector2Int GetDeskEllemenIndexes(DeskEllement a_ellement)
@@ -243,6 +240,7 @@ public class Desk : MonoBehaviour
 
     private void OnValidate()
     {
+#if UNITY_EDITOR
         if (IsAutoGenerateOnValidate && !Application.isPlaying )
         {
             UnityEditor.EditorApplication.delayCall += () =>
@@ -252,7 +250,8 @@ public class Desk : MonoBehaviour
                 CreateMap();
             };
         }
+#endif
     }
 
-    #endregion
+#endregion
 }
