@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : SingletonTemplate<UIManager>
 {
     #region //SerializeFields
+    [SerializeField] GameObject WinPopup;
     #endregion
 
     #region //Events
@@ -20,7 +21,7 @@ public class UIManager : SingletonTemplate<UIManager>
     // Start is called before the first frame update
     void Start()
     {
-
+        GameEvents.Instance.OnGameComplete += OnGameComplete;
     }
 
     // Update is called once per frame
@@ -34,6 +35,7 @@ public class UIManager : SingletonTemplate<UIManager>
 
     public void ResetGame()
     {
+        WinPopup.active = false;
         if (GameEvents.Instance.OnResetGame != null)
         {
             GameEvents.Instance.OnResetGame(GameManager.Instance.deskSize);
@@ -48,7 +50,12 @@ public class UIManager : SingletonTemplate<UIManager>
     #endregion
 
     #region //Event callbacks
-    
+
+    public void OnGameComplete()
+    {
+        WinPopup.active = true;
+    }
+
     //private void On
     
     #endregion

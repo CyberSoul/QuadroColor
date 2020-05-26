@@ -77,7 +77,11 @@ public class GameManager : SingletonTemplate<GameManager>
 
     private void OnLineCollected()
     {
-        GameEvents.Instance.OnGameComplete();
+        if (GameEvents.Instance.OnGameComplete != null)
+        {
+            GameEvents.Instance.OnGameComplete();
+        }
+
         Debug.Log("CONGRATULATIONS!");
     }
     #endregion

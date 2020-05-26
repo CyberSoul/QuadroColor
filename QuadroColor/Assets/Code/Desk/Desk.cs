@@ -95,6 +95,7 @@ public class Desk : MonoBehaviour
     #region //Generation
     void CreateMap()
     {
+        Debug.Log("CreateMap");
         if (deskView != null && deskEllementPrefab != null)
         {
             if (deskEllementContainer == null)
@@ -132,6 +133,7 @@ public class Desk : MonoBehaviour
 
     void RemoveEllements()
     {
+        Debug.Log("RemoveEllements");
         var deskEllements = GameObject.FindGameObjectsWithTag("deskEllement");
         for (int i = 0; i < deskEllements.Length; ++i)
         {

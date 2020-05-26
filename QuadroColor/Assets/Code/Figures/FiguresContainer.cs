@@ -159,10 +159,10 @@ public class FiguresContainer : MonoBehaviour
 
     void SetColorsRecurs(int a_startIndex, int a_endIndex, int a_materialIndex, int a_recursStep, Material[] a_materials)
     {
-        Debug.Log($"a_startIndex = {a_startIndex}; a_endIndex = {a_endIndex}; a_materialIndex = {a_materialIndex}; a_recursSte = {a_recursStep}");
+        //Debug.Log($"a_startIndex = {a_startIndex}; a_endIndex = {a_endIndex}; a_materialIndex = {a_materialIndex}; a_recursSte = {a_recursStep}");
         for (int i = a_startIndex; i < a_endIndex; ++i)
         {
-            Debug.Log($"Apply color with index {a_materialIndex} to item in list {i}");
+            //Debug.Log($"Apply color with index {a_materialIndex} to item in list {i}");
             figures[i].AddMaterial(a_materials[a_materialIndex]);
         }
         ++a_recursStep;

@@ -31,7 +31,7 @@ public class GameEvents : SingletonTemplate<GameEvents>
     #endregion
 
 
-    #region //Public
+    #region //Public   
     #endregion
 
     #region //Event callbacks
