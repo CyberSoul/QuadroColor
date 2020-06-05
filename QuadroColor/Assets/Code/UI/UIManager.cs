@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : SingletonTemplate<UIManager>
 {
     #region //SerializeFields
     [SerializeField] GameObject WinPopup;
+    [SerializeField] Text PlayerName;
     #endregion
 
     #region //Events
@@ -22,6 +24,7 @@ public class UIManager : SingletonTemplate<UIManager>
     void Start()
     {
         GameEvents.Instance.OnGameComplete += OnGameComplete;
+        GameManager.Instance.OnPlayerPhaseChanged.AddListener(OnPlayerPhaseChanged);
     }
 
     // Update is called once per frame
@@ -38,13 +41,18 @@ public class UIManager : SingletonTemplate<UIManager>
         WinPopup.active = false;
         if (GameEvents.Instance.OnResetGame != null)
         {
-            GameEvents.Instance.OnResetGame(GameManager.Instance.deskSize);
+            GameEvents.Instance.OnResetGame(GameManager.Instance.CurrentDeskSize);
         }
     }
 
     public void Close()
     {
         Application.Quit();
+    }
+
+    public void EndTurn()
+    {
+        GameEvents.Instance.OnTurnEnd();
     }
 
     #endregion
@@ -56,6 +64,20 @@ public class UIManager : SingletonTemplate<UIManager>
         WinPopup.active = true;
     }
 
+    private void OnPlayerPhaseChanged(string a_playerName, PlayerStepPhase a_phase)
+    {
+        PlayerName.text = a_playerName + "\n";
+        switch (a_phase)
+        {
+            case PlayerStepPhase.Place:
+                PlayerName.text += "Please place selected figure";
+                break;
+
+            case PlayerStepPhase.Select:
+                PlayerName.text += "Please selecte figure for opponent";
+                break;
+        }
+    }
     //private void On
     
     #endregion

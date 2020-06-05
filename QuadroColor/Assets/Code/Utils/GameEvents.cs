@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System; //For func and actions.
+using UnityEngine.Events;
 
 public class GameEvents : SingletonTemplate<GameEvents>
 {
@@ -10,6 +11,12 @@ public class GameEvents : SingletonTemplate<GameEvents>
     #endregion
 
     #region //Events
+
+    [System.Serializable] public class EventGameScene : UnityEvent<SceneList, SceneList> { }
+    [System.Serializable] public class EventFadeComplete : UnityEvent<bool> { }
+
+    [System.Serializable] public class EventPlayerPhaseChanged : UnityEvent<string, PlayerStepPhase> { }
+
     public Action<Figure> OnFigureTap;
     public Action<DeskEllement> OnDeskEllementTap;
     public Action<DeskEllement, Figure> OnAttachFigure;

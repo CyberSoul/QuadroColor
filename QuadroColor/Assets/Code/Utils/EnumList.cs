@@ -1,6 +1,14 @@
 ﻿
 public enum SceneList
 {
+    Initial,
     Menu,
-    Game
+    Game4/*,
+    Game5*/
+}
+
+public enum PlayerStepPhase
+{
+    Place,
+    Select
 }

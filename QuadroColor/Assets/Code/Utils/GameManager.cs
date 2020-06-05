@@ -11,15 +11,31 @@ public class GameManager : SingletonTemplate<GameManager>
     [SerializeField] FiguresContainer figureContainer;
     #endregion
 
+    #region //Events
+    public GameEvents.EventPlayerPhaseChanged OnPlayerPhaseChanged;
+    #endregion
+
     #region //Private fields
+    public LevelStartData startData;
 
-    public int deskSize;
-
+    int activePlayerIndex = 0;
+    PlayerStepPhase activePhase = PlayerStepPhase.Select;
     #endregion
 
     #region //Properies
 
     public GameSettings Settings { get { return gameSettings; } }
+    public int CurrentDeskSize { get { return startData.level.deskSize; } }
+    public string ActivePlayerName { get { return startData.playerNames[activePlayerIndex]; } }
+    public PlayerStepPhase ActiveStepPhase
+    {
+        get { return activePhase; }
+        set
+        {
+            activePhase = value;
+            OnPlayerPhaseChanged.Invoke(ActivePlayerName, activePhase);
+        }
+    }
 
     #endregion
 
@@ -27,20 +43,22 @@ public class GameManager : SingletonTemplate<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+        startData = GlobalDataManager.Instance.activeLevelSettings;
         if (desk != null)
         {
-            desk.CreateMap(deskSize);
-            figureContainer.CreateFigures(deskSize, GetFigure(), GetMaterials());
+            desk.CreateMap(startData.level.deskSize);
+            figureContainer.CreateFigures(startData.level.colorPairs, GetFigure(), GetMaterials());
         }
         GameEvents.Instance.OnDeskEllementTap += OnDeskTap;
         GameEvents.Instance.OnCollectLine += OnLineCollected;
         GameEvents.Instance.OnResetGame += OnResetGame;
+        GameEvents.Instance.OnTurnEnd += OnEndTurnCallback;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     #endregion
 
@@ -48,16 +66,27 @@ public class GameManager : SingletonTemplate<GameManager>
     #region //Public
     public Material[] GetMaterials()
     {
-        return gameSettings.GetMaterialsByDeskSize(deskSize);
+        return gameSettings.GetMaterialsByDeskSize(CurrentDeskSize);
     }
 
     public Figure GetFigure()
     {
-        return gameSettings.GetFigure(deskSize);
+        return gameSettings.GetFigure(CurrentDeskSize);
     }
     #endregion
 
     #region //Event callbacks
+    private void OnEndTurnCallback()
+    {
+        ++activePlayerIndex;
+        if (activePlayerIndex >= startData.playerNames.Length)
+        {
+            activePlayerIndex = 0;
+        }
+
+        ActiveStepPhase = PlayerStepPhase.Place;
+    }
+
     private void OnResetGame(int deskSize)
     {
 
@@ -65,13 +94,17 @@ public class GameManager : SingletonTemplate<GameManager>
 
     private void OnDeskTap(DeskEllement ellement)
     {
-        if (figureContainer.SelectedFigure != null)
+        if (GameManager.Instance.ActiveStepPhase == PlayerStepPhase.Place)
         {
-            var figure = figureContainer.SelectedFigure;
-            ellement.AttachFigure(figure);
-            figure.Attach();
+            if (figureContainer.SelectedFigure != null)
+            {
+                var figure = figureContainer.SelectedFigure;
+                ellement.AttachFigure(figure);
+                figure.Attach();
 
-            GameEvents.Instance.OnAttachFigure(ellement, figure);
+                GameEvents.Instance.OnAttachFigure(ellement, figure);
+                ActiveStepPhase = PlayerStepPhase.Select;
+            }
         }
     }
 

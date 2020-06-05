@@ -113,22 +113,25 @@ public class FiguresContainer : MonoBehaviour
     private void OnFigureTap(Figure a_figure)
     {
         Debug.Log("OnFigureTap");
-        bool isSame = a_figure == selectedFigure;
+        if (GameManager.Instance.ActiveStepPhase == PlayerStepPhase.Select)
+        {
+            bool isSame = a_figure == selectedFigure;
 
-        //TO_DO check for attached
-        if (selectedFigure != null)
-        {
-            selectedFigure.UnSelect();
-        }
+            //TO_DO check for attached
+            if (selectedFigure != null)
+            {
+                selectedFigure.UnSelect();
+            }
 
-        if (!isSame)
-        {
-            selectedFigure = a_figure;
-            selectedFigure.Select();
-        }
-        else
-        {
-            selectedFigure = null;
+            if (!isSame)
+            {
+                selectedFigure = a_figure;
+                selectedFigure.Select();
+            }
+            else
+            {
+                selectedFigure = null;
+            }
         }
     }
 
