@@ -42,6 +42,7 @@ public class UIManager : SingletonTemplate<UIManager>
         if (GameEvents.Instance.OnResetGame != null)
         {
             GameEvents.Instance.OnResetGame(GameManager.Instance.CurrentDeskSize);
+            GameManager.Instance.OnPlayerPhaseChanged.AddListener(OnPlayerPhaseChanged);
         }
     }
 
@@ -74,7 +75,7 @@ public class UIManager : SingletonTemplate<UIManager>
                 break;
 
             case PlayerStepPhase.Select:
-                PlayerName.text += "Please selecte figure for opponent";
+                PlayerName.text += "Please select figure for opponent";
                 break;
         }
     }

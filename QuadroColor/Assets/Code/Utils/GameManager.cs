@@ -49,6 +49,9 @@ public class GameManager : SingletonTemplate<GameManager>
             desk.CreateMap(startData.level.deskSize);
             figureContainer.CreateFigures(startData.level.colorPairs, GetFigure(), GetMaterials());
         }
+
+        ActiveStepPhase = PlayerStepPhase.Select;
+
         GameEvents.Instance.OnDeskEllementTap += OnDeskTap;
         GameEvents.Instance.OnCollectLine += OnLineCollected;
         GameEvents.Instance.OnResetGame += OnResetGame;
@@ -78,13 +81,16 @@ public class GameManager : SingletonTemplate<GameManager>
     #region //Event callbacks
     private void OnEndTurnCallback()
     {
-        ++activePlayerIndex;
-        if (activePlayerIndex >= startData.playerNames.Length)
+        if (ActiveStepPhase == PlayerStepPhase.Select && figureContainer.SelectedFigure != null)
         {
-            activePlayerIndex = 0;
-        }
+            ++activePlayerIndex;
+            if (activePlayerIndex >= startData.playerNames.Length)
+            {
+                activePlayerIndex = 0;
+            }
 
-        ActiveStepPhase = PlayerStepPhase.Place;
+            ActiveStepPhase = PlayerStepPhase.Place;
+        }
     }
 
     private void OnResetGame(int deskSize)
