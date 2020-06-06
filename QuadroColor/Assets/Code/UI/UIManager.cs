@@ -8,6 +8,7 @@ public class UIManager : SingletonTemplate<UIManager>
     #region //SerializeFields
     [SerializeField] GameObject WinPopup;
     [SerializeField] Text PlayerName;
+    [SerializeField] Button EndTurnBtn;
     #endregion
 
     #region //Events
@@ -43,6 +44,7 @@ public class UIManager : SingletonTemplate<UIManager>
         {
             GameEvents.Instance.OnResetGame(GameManager.Instance.CurrentDeskSize);
             GameManager.Instance.OnPlayerPhaseChanged.AddListener(OnPlayerPhaseChanged);
+            GameManager.Instance.OnFigureSelected.AddListener(OnFigureSlected);
         }
     }
 
@@ -72,14 +74,21 @@ public class UIManager : SingletonTemplate<UIManager>
         {
             case PlayerStepPhase.Place:
                 PlayerName.text += "Please place selected figure";
+                EndTurnBtn.interactable = false;
                 break;
 
             case PlayerStepPhase.Select:
                 PlayerName.text += "Please select figure for opponent";
+                EndTurnBtn.interactable = false;
                 break;
         }
     }
-    //private void On
+    private void OnFigureSlected(Figure a_figure)
+    {
+        int i = 0;
+        ++i;
+        EndTurnBtn.interactable = true;
+    }    
     
     #endregion
 

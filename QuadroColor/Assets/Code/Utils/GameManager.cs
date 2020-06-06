@@ -13,6 +13,7 @@ public class GameManager : SingletonTemplate<GameManager>
 
     #region //Events
     public GameEvents.EventPlayerPhaseChanged OnPlayerPhaseChanged;
+    public GameEvents.EventPlayerFigureSelected OnFigureSelected;
     #endregion
 
     #region //Private fields

@@ -16,6 +16,7 @@ public class GameEvents : SingletonTemplate<GameEvents>
     [System.Serializable] public class EventFadeComplete : UnityEvent<bool> { }
 
     [System.Serializable] public class EventPlayerPhaseChanged : UnityEvent<string, PlayerStepPhase> { }
+    [System.Serializable] public class EventPlayerFigureSelected : UnityEvent<Figure> { }
 
     public Action<Figure> OnFigureTap;
     public Action<DeskEllement> OnDeskEllementTap;
