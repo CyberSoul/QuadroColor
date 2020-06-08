@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : SingletonTemplate<UIManager>
+public class UIManagerGame : SingletonTemplate<UIManagerGame>
 {
     #region //SerializeFields
     [SerializeField] GameObject WinPopup;
@@ -26,6 +26,7 @@ public class UIManager : SingletonTemplate<UIManager>
     {
         GameEvents.Instance.OnGameComplete += OnGameComplete;
         GameManager.Instance.OnPlayerPhaseChanged.AddListener(OnPlayerPhaseChanged);
+        GameManager.Instance.OnFigureSelected.AddListener(OnFigureSlected);
     }
 
     // Update is called once per frame
@@ -43,8 +44,8 @@ public class UIManager : SingletonTemplate<UIManager>
         if (GameEvents.Instance.OnResetGame != null)
         {
             GameEvents.Instance.OnResetGame(GameManager.Instance.CurrentDeskSize);
-            GameManager.Instance.OnPlayerPhaseChanged.AddListener(OnPlayerPhaseChanged);
-            GameManager.Instance.OnFigureSelected.AddListener(OnFigureSlected);
+            /*GameManager.Instance.OnPlayerPhaseChanged.AddListener(OnPlayerPhaseChanged);
+            GameManager.Instance.OnFigureSelected.AddListener(OnFigureSlected);*/
         }
     }
 
